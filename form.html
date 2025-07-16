@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Анкета учасника</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff8f2;
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      font-size: 18px;
+      width: 100%;
+      background-color: #ffa973;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff924d;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Анкета учасника</h2>
+
+  <form id="contactForm">
+    <label>Прізвище:</label>
+    <input type="text" name="Прізвище" required>
+
+    <label>Ім’я:</label>
+    <input type="text" name="Ім’я" required>
+
+    <label>Дата народження:</label>
+    <input type="date" name="Дата народження" required>
+
+    <label>Номер телефону:</label>
+    <input type="tel" name="Номер телефону">
+
+    <label>Instagram:</label>
+    <input type="text" name="Instagram">
+
+    <button type="submit">Надіслати</button>
+    <div class="message" id="formMessage"></div>
+  </form>
+
+  <script>
+    const form = document.getElementById("contactForm");
+    const message = document.getElementById("formMessage");
+
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwgTX1dy91uGJvM1cgdXOcGniIxpr9sQ_MtZP3_-Q6JLqyEOyL496lxxSZPL8uwQhghRQ/exec";
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const data = new FormData(form);
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: data
+      })
+        .then(response => {
+          message.textContent = "✅ Дані надіслані!";
+          message.style.color = "green";
+          form.reset();
+        })
+        .catch(error => {
+          message.textContent = "❌ Помилка при надсиланні!";
+          message.style.color = "red";
+          console.error("Error!", error.message);
+        });
+    });
+  </script>
+
+</body>
+</html>
